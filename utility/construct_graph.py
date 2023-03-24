@@ -53,7 +53,7 @@ class graph_data_base():
 		#if not nx.is_empty(self.G):
 		for j in self.G.nodes():
 			for i in self.G.successors(j):
-				r = self.G[i]['relation']
+				r = self.G[j][i]['relation']
 				triple = {
 					        'source' : j,
 					        'relation' : r,
