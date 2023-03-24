@@ -54,4 +54,4 @@ def get_target(source, relation):
     }
     return jsonify({'query_triple':query_triple})
 
-app.run()
+app.run(host='0.0.0.0',port=8080)
