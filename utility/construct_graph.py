@@ -1,9 +1,8 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-from flask import Flask
-from flask_restful import Resource, Api, reqparse
 
-class graph_data_base(Resource):
+
+class graph_data_base():
 	def __init__(self):
 		"""
 		define initial directed graph
@@ -45,13 +44,24 @@ class graph_data_base(Resource):
 
 		return None
 
-	def query_all_relation(self, source):
+	def query_all_relation(self):
 		"""
 		return all relation type
 		"""
-		for i in self.G.successors(source):
-			r = self.G[source][i]['relation']
-			print("%s, %s, %s" % (source, r, i))
+		triples = []
+		#if not nx.is_empty(self.G):
+		for j in self.G.nodes():
+			for i in self.G.successors(source):
+				r = self.G[source][i]['relation']
+				triple = {
+					        'source' : j,
+					        'relation' : r,
+					        'target' : i
+					    	}
+				triples.append(triple)
+		return jsonify(triples)
+			#print("%s, %s, %s" % (source, r, i))
+
 
 	def vis_graph(self):
 		"""
@@ -63,5 +73,10 @@ class graph_data_base(Resource):
 		nx.draw_networkx_edge_labels(self.G, pos=poses, edge_labels=edge_labels)
 		plt.show()
 
-	pass
+	#def graph_storage(self):
+		"""
+		store the knowlege graph data every few write operations from endpoint
+		"""
+
+
 
