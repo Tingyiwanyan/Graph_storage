@@ -1,110 +1,90 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api, reqparse
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 #import ast
 
-class graph_data_base_endpoint(Resource):
-	def __init__(self):
-		"""
-		define initial directed graph
-		"""
-		self.G = nx.DiGraph()
+app = Flask(__name__)
 
-	#def get(self):
+movies = [
+    {
+        'name' : 'Dune',
+        'actors': [
+            {
+                'name' : 'Zendaya',
+                'age'  : '23'
+            },
+            {
+                'name' : 'Timothee Chalamet',
+                'age'  : '26'
+            }
+        ],
+        'ratings' : '7.2'
+    },
+    {
+        'name' : 'The French Dispatch',
+        'actors': [
+            {
+                'name': 'Bill Murray',
+                'age' : '56'
+                
+            },
+            {
+                'name': 'Frances Mcdormand',
+                'age' : '54'
+            }
+        ],
+        'ratings' : '8.0'
+    }
+]
 
-	def add_node(self):
-		"""
-		add new node, attribute is default to be none
-		"""
-		parser = reqparse.RequestParser()
-		parser.add_argument('source_node',required=True)
-		parser.add_argument('attribute_name',required=True)
-		parser.add_argument('attribute',required=True)
-		args = parser.parse_args()
+#route for creating new movies
+@app.route('/movies',methods=['POST'])  
+def create_movies():
+    data = request.get_json() # get the json from the post request object
 
-		source = args['source_node']
-		attribute_name = args['attribute_name']
-		attribute = args['attribute']
+    new_movie = {
+        'name' : data['name'],
+        'actors' : data['actors'],
+        'ratings' : data['ratings']
+    }
+    movies.append(new_movie)
+    return jsonify(new_movie) # for the browser to understand that a new store was created.
 
-		self.G.add_node(source)
-		if not args[attribute] == None:
-			if not args[attribute_name] == None:
-				nx.set_node_attributes(self.G,{source: attribute},attribute_name)
-			else:
-				nx.set_node_attributes(self.G,{source: attribute},'attribute')
+    
+# route for getting all movies
+@app.route('/movies')
+def get_movies():
+    return jsonify({'movies':movies})
+
+# route for getting anyone one movie
+@app.route('/movies/<string:name>')
+def get_movie(name):
+    for movie in movies :
+        if movie['name'] == name:
+            return jsonify(movie)
+    return jsonify({'message': 'Movie not found'})
 
 
-	def add_triple(self):
-		"""
-		fill in triple relations.
-		"""
-		parser = reqparse.RequestParser()
-		parser.add_argument('source_node',required=True)
-		parser.add_argument('relation_type',required=True)
-		parser.add_argument('target_node',required=True)
-		args = parser.parse_args()
+# route for getting actors in a movie
+@app.route('/movies_get/<string:name>/actors')
+def get_actor_in_movie(name):
+    for movie in movies:
+        if movie['name'] == name:
+            return jsonify({"actors": movie['actors']})
+    return jsonify({'message': 'Movie not found'})
 
-		source = args['source_node']
-		relation_type = args['relation_type']
-		target = args['target_node']
+# route for adding actors to a movie
+@app.route('/movies_post/<string:name>/actor',methods=['POST'])
+def add_actor_to_movie(name):
+    data = request.get_json()
+    new_actor = {'name': data['name'],'age': data['age']}
+    for movie in movies:
+        if movie['name'] == name:
+            movie['actors'].append(new_actor)
+            return jsonify(movie)
+    return jsonify({'message' : 'Movie does not exist'})    
+    
 
-		self.G.add_edge(source, target, relation=relation_type)
-
-	def remove_triple(self):
-		"""
-		remove relation
-		"""
-		parser = reqparse.RequestParser()
-		parser.add_argument('source_node',required=True)
-		parser.add_argument('target_node',required=True)
-		args = parser.parse_args()
-
-		source = args['source_node']
-		target = args['target_node']
-
-		self.G.remove_edge(source, target)
-
-	def query_target(self):
-		"""
-		query target node based on source and relation type
-		"""
-		parser = reqparse.RequestParser()
-		parser.add_argument('source_node',required=True)
-		parser.add_argument('relation_type',required=True)
-		args = parser.parse_args()
-
-		source = args['source_node']
-		relation_type = args['relation_type']
-
-		for i in self.G.successors(source):
-			r = self.G[source][i]['relation']
-			if r == relation_type:
-				return i
-
-		return None
-
-	def query_all_relation(self):
-		"""
-		return all relation type
-		"""
-		parser = reqparse.RequestParser()
-		parser.add_argument('source_node',required=True)
-		args = parser.parse_args()
-
-		source = args['source_node']
-
-		for i in self.G.successors(source):
-			r = self.G[source][i]['relation']
-			print("%s, %s, %s" % (source, r, i))
-
-	def vis_graph(self):
-		"""
-		visualize the knowledge graph
-		"""
-		poses=nx.spring_layout(self.G)
-		nx.draw(self.G, pos=poses, with_labels=True)
-		edge_labels = nx.get_edge_attributes(self.G,'relation')
-		nx.draw_networkx_edge_labels(self.G, pos=poses, edge_labels=edge_labels)
-		plt.show()
+app.run()
