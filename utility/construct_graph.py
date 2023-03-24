@@ -1,5 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+from flask import jsonify
 
 
 class graph_data_base():
