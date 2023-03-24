@@ -52,7 +52,7 @@ class graph_data_base():
 		triples = []
 		#if not nx.is_empty(self.G):
 		for j in self.G.nodes():
-			for i in self.G.successors(source):
+			for i in self.G.successors(j):
 				r = self.G[source][i]['relation']
 				triple = {
 					        'source' : j,
