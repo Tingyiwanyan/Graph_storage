@@ -39,6 +39,11 @@ def add_node():
 
     
 # route for getting target
+
+@app.route('/show_all_triples')
+def show_triples():
+    return G.query_all_relation()
+
 @app.route('/get_target/<string:source>/<string:relation>')
 def get_target(source, relation):
     target = G.query_target(source, relation)
