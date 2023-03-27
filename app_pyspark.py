@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify
 from pyspark.sql import SparkSesseion
 import pandas as pd
 
-spark = SparkSesseion.builder.maskter("local")
-			.appName("graph_server")
-			.enableHiveSupport()
-			.getOrCreate()
+spark = SparkSesseion.builder.maskter("local")\
+.appName("graph_server")\
+.enableHiveSupport()\
+.getOrCreate()
 
 
 columns = ["id", "source", "relation", "target"]
