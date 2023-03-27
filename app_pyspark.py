@@ -15,7 +15,7 @@ data = [(1,"james","where","Home")]
 
 triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
 
-spark.sql("CREATE DATABASE IF NOT EXIST graph_databse")
+spark.sql("CREATE DATABASE IF NOT EXISTS graph_databse")
 
 #Create internal tabel
 
