@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from pyspark.sql import SparkSession
 import pandas as pd
 
-spark = SparkSession.builder.maskter("local")\
+spark = SparkSession.builder.master("local")\
 .appName("graph_server")\
 .enableHiveSupport()\
 .getOrCreate()
