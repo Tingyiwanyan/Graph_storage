@@ -4,7 +4,7 @@ import pandas as pd
 
 spark = SparkSession.builder.master("local")\
 .appName("graph_server")\
-.config("spark.sql.warehouse.dir","/home")\
+#.config("spark.sql.warehouse.dir","/home")\
 .enableHiveSupport()\
 .getOrCreate()
 
