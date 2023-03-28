@@ -11,10 +11,12 @@ G = graph_data_base()
 
 app = Flask(__name__)
 
+dataa = 1
 #route for adding new triple
 @app.route('/add_triple',methods=['POST'])  
 def add_triple():
     datas = request.get_json() # get the json from the post request object
+    dataa = datas
     for data in datas:
         source = data['source']
         relation = data['relation']
