@@ -15,7 +15,7 @@ app = Flask(__name__)
 @app.route('/add_triple',methods=['POST'])  
 def add_triple():
     datas = request.get_json() # get the json from the post request object
-    print(datas)
+    #print(datas)
     for data in datas:
         print(data)
         source = data['source']
