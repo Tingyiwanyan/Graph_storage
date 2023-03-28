@@ -12,7 +12,7 @@ columns = ["source", "relation", "target"]
 
 data = [("james","where","Home")]
 
-#triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
+triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
 
 spark.sql("CREATE DATABASE IF NOT EXISTS graph_database")
 
@@ -51,9 +51,9 @@ def add_triple():
 	return jsonify(new_triple) # for the browser to understand that a new store was created.
 
 # route for getting target
-@app.route('/show_all_triples')
-def show_triples():
-    return G.query_all_relation()
+#@app.route('/show_all_triples')
+#def show_triples():
+#    return G.query_all_relation()
 
 
 app.run(host='0.0.0.0',port=8080)
