@@ -26,18 +26,15 @@ triple_DF.write.mode('overwrite').saveAsTable("graph_database.triple_relation")
 
 app = Flask(__name__)
 
+
 #route for adding new triple
 @app.route('/add_triple',methods=['POST'])  
 def add_triple():
-    data = request.get_json() # get the json from the post request object
-    source = data['source']
-    relation = data['relation']
-    target = data['target']
-
-    #G.add_triple(source, relation, target)
-
-    columns = ["source", "relation", "target"]
-
+	data = request.get_json() # get the json from the post request object
+	source = data['source']
+	relation = data['relation']
+	target = data['target']
+	columns = ["source", "relation", "target"]
 	data = [(source,relation,target)]
 
 	df_temp = spark.sparkContext.parallelize(data).toDF(columns)
@@ -46,12 +43,12 @@ def add_triple():
 
 	#df.write.insertInto("graph_database.temporal_table",overwrite = False)
 
-    new_triple = {
-        'source' : source,
-        'relation' : relation,
-        'target' : target
-    }
-    return jsonify(new_triple) # for the browser to understand that a new store was created.
+	new_triple = {
+	'source' : source,
+	'relation' : relation,
+	'target' : target
+	}
+	return jsonify(new_triple) # for the browser to understand that a new store was created.
 
 # route for getting target
 @app.route('/show_all_triples')
