@@ -19,7 +19,7 @@ def add_triple():
 
     source = data['source']
     relation = data['relation']
-    target = datas[data]['target']
+    target = data['target']
 
     G.add_triple(source, relation, target)
 
