@@ -16,6 +16,7 @@ dataa = 1
 @app.route('/add_triple',methods=['POST'])  
 def add_triple():
     datas = request.get_json() # get the json from the post request object
+    print(datas)
     dataa = datas
     for data in datas:
         source = data['source']
