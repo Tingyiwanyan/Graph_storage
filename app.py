@@ -18,9 +18,9 @@ def add_triple():
     #print(datas)
     for data in datas:
         print(data)
-        source = data['source']
-        relation = data['relation']
-        target = data['target']
+        source = datas[data]['source']
+        relation = datas[data]['relation']
+        target = datas[data]['target']
 
         G.add_triple(source, relation, target)
 
