@@ -14,22 +14,21 @@ app = Flask(__name__)
 #route for adding new triple
 @app.route('/add_triple',methods=['POST'])  
 def add_triple():
-    datas = request.get_json() # get the json from the post request object
+    data = request.get_json() # get the json from the post request object
     #print(datas)
-    for data in datas:
-        print(data)
-        source = datas[data]['source']
-        relation = datas[data]['relation']
-        target = datas[data]['target']
 
-        G.add_triple(source, relation, target)
+    source = data['source']
+    relation = data['relation']
+    target = datas[data]['target']
 
-        new_triple = {
-            'source' : source,
-            'relation' : relation,
-            'target' : target
-        }
-    #return jsonify(new_triple) # for the browser to understand that a new store was created.
+    G.add_triple(source, relation, target)
+
+    new_triple = {
+        'source' : source,
+        'relation' : relation,
+        'target' : target
+    }
+    return jsonify(new_triple) # for the browser to understand that a new store was created.
 
 @app.route('/add_node',methods=['POST'])
 def add_node():
