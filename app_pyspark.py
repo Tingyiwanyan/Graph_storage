@@ -16,7 +16,7 @@ triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
 
 spark.sql("CREATE DATABASE IF NOT EXISTS graph_database")
 
-spark.sql("CREATE TABLE IF NOT EXISTS graph_database.triple_relation (ID TINYTEXT, SOURCE TEXT, RELATION TEXT, TIME_ DATE, TARGET LONGTEXT)")
+spark.sql("CREATE TABLE IF NOT EXISTS graph_database.triple_relation (ID String, SOURCE String, RELATION String, TIME_ DATE, TARGET String)")
 
 #Create internal tabel
 
