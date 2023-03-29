@@ -43,7 +43,11 @@ def add_triple():
 
 	df_temp = spark.sparkContext.parallelize(data).toDF(columns)
 
-	df_temp.write.mode('append').saveAsTable("graph_database.triple_relation")
+	df_temp.createOrReplaceTempView("df_temp")
+	
+	spark.sql("INSERT INTO TABLE graph_database.triple_relation SELECT * FROM df_temp")
+
+	#df_temp.write.mode('append').saveAsTable("graph_database.triple_relation")
 
 	#df.write.insertInto("graph_database.temporal_table",overwrite = False)
 
