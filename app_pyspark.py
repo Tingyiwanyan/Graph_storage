@@ -16,7 +16,7 @@ spark = SparkSession.builder.enableHiveSupport().getOrCreate()
 
 spark.sql("CREATE DATABASE IF NOT EXISTS graph_database")
 
-spark.sql("CREATE TABLE IF NOT EXISTS graph_database.triple_relation (ID String, SOURCE String, RELATION String, TIME_ DATE, TARGET String)")
+spark.sql("CREATE TABLE IF NOT EXISTS graph_database.triple_relation (ID String, SOURCE String, RELATION String, TIME_ String, TARGET String)")
 
 #Create internal tabel
 
@@ -44,7 +44,7 @@ def add_triple():
 	df_temp = spark.sparkContext.parallelize(data).toDF(columns)
 
 	df_temp.createOrReplaceTempView("df_temp")
-	
+
 	spark.sql("INSERT INTO TABLE graph_database.triple_relation SELECT * FROM df_temp")
 
 	#df_temp.write.mode('append').saveAsTable("graph_database.triple_relation")
