@@ -8,11 +8,11 @@ Initiate spark session
 spark = SparkSession.builder.enableHiveSupport().getOrCreate()
 
 
-columns = ["source", "relation", "target"]
+#columns = ["source", "relation", "target"]
 
-data = [("james","where","Home")]
+#data = [("james","where","Home")]
 
-triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
+#triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
 
 spark.sql("CREATE DATABASE IF NOT EXISTS graph_database")
 
