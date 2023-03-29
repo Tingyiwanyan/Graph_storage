@@ -16,9 +16,11 @@ triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
 
 spark.sql("CREATE DATABASE IF NOT EXISTS graph_database")
 
+spark.sql("CREATE TABLE IF NOT EXISTS graph_database.triple_relation (ID TINYTEXT, SOURCE TEXT, RELATION TEXT, TIME_ DATE, TARGET LONGTEXT)")
+
 #Create internal tabel
 
-triple_DF.write.mode('overwrite').saveAsTable("graph_database.triple_relation")
+#triple_DF.write.mode('overwrite').saveAsTable("graph_database.triple_relation")
 
 #df = spark.read.table("graph_database.triple_relation")
 #df.show()
@@ -34,8 +36,10 @@ def add_triple():
 	source = data['source']
 	relation = data['relation']
 	target = data['target']
-	columns = ["source", "relation", "target"]
-	data = [(source,relation,target)]
+	id_ = data['id']
+	time = data['time']
+	columns = ["id","source","relation","time","target"]
+	data = [(id_,source,relation,time,target)]
 
 	df_temp = spark.sparkContext.parallelize(data).toDF(columns)
 
@@ -44,8 +48,10 @@ def add_triple():
 	#df.write.insertInto("graph_database.temporal_table",overwrite = False)
 
 	new_triple = {
+	'id': id_
 	'source' : source,
 	'relation' : relation,
+	'time' : time
 	'target' : target
 	}
 	return jsonify(new_triple) # for the browser to understand that a new store was created.
