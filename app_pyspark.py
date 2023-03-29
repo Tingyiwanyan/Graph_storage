@@ -16,7 +16,7 @@ spark = SparkSession.builder.enableHiveSupport().getOrCreate()
 
 spark.sql("CREATE DATABASE IF NOT EXISTS graph_database")
 
-spark.sql("CREATE TABLE IF NOT EXISTS graph_database.triple_relation (ID Varchar(100), SOURCE Varchar(10000), RELATION Varchar(1000), TIME_ String, TARGET Varchar(1000000))")
+spark.sql("CREATE TABLE IF NOT EXISTS graph_database.triple_relation (ID Varchar(100), SOURCE Varchar(10000), RELATION Varchar(1000), TIME_ String, TARGET Varchar(65533))")
 
 #Create internal tabel
 
