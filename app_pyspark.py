@@ -48,10 +48,10 @@ def add_triple():
 	#df.write.insertInto("graph_database.temporal_table",overwrite = False)
 
 	new_triple = {
-	'id': id_
+	'id': id_,
 	'source' : source,
 	'relation' : relation,
-	'time' : time
+	'time' : time,
 	'target' : target
 	}
 	return jsonify(new_triple) # for the browser to understand that a new store was created.
