@@ -8,11 +8,11 @@ Initiate spark session
 spark = SparkSession.builder.enableHiveSupport().getOrCreate()
 
 
-columns = ["id","source","relation","time","target"]
+#columns = ["id","source","relation","time","target"]
 
-data = [("11","james","where","march","Home")]
+#data = [("11","james","where","march","Home")]
 
-triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
+#triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
 
 spark.sql("CREATE DATABASE IF NOT EXISTS graph_database")
 
@@ -20,7 +20,7 @@ spark.sql("CREATE DATABASE IF NOT EXISTS graph_database")
 
 #Create internal tabel
 
-triple_DF.write.mode('overwrite').saveAsTable("graph_database.triple_relation")
+#triple_DF.write.mode('overwrite').saveAsTable("graph_database.triple_relation")
 
 #df = spark.read.table("graph_database.triple_relation")
 #df.show()
@@ -37,9 +37,9 @@ def add_triple():
 	relation = data['relation']
 	target = data['target']
 	id_ = data['id']
-	time_ = data['time']
+	time = data['time']
 	columns = ["id","source","relation","time","target"]
-	data = [(id_,source,relation,time_,target)]
+	data = [(id_,source,relation,time,target)]
 	print(target)
 	target = ''.join(target.splitlines())
 	print(target)
@@ -50,11 +50,14 @@ def add_triple():
 	#	VALUES(id_, source, relation, time_, target)")
 
 	#df_temp.createOrReplaceTempView("df_temp")
-	df_temp.write.mode('overwrite').saveAsTable("graph_database.temp_table")
+	#df_temp.write.mode('overwrite').saveAsTable("graph_database.temp_table")
 
 	#spark.sql("INSERT INTO TABLE graph_database.triple_relation SELECT * FROM graph_database.temp_table")
-
-	df_temp.write.mode('append').saveAsTable("graph_database.triple_relation")
+	tables = spark.catalog.listTables()
+	if "triple_relation" in [table.name for table in tables]:
+		df_temp.write.mode('append').saveAsTable("graph_database.triple_relation")
+	else:
+		df_temp.write.mode('overwrite').saveAsTable("graph_database.triple_relation")
 
 	#df.write.insertInto("graph_database.temporal_table",overwrite = False)
 
