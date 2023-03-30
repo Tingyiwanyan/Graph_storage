@@ -40,7 +40,7 @@ def add_triple():
 	time = data['time']
 	columns = ["id","source","relation","time","target"]
 	data = [(id_,source,relation,time,target)]
-
+	print(target)
 	target = target.strip()
 	df_temp = spark.sparkContext.parallelize(data).toDF(columns)
 
