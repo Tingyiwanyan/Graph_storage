@@ -41,6 +41,7 @@ def add_triple():
 	columns = ["id","source","relation","time","target"]
 	data = [(id_,source,relation,time,target)]
 
+	target = target.strip()
 	df_temp = spark.sparkContext.parallelize(data).toDF(columns)
 
 	df_temp.createOrReplaceTempView("df_temp")
