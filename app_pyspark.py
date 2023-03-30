@@ -44,6 +44,7 @@ def add_triple():
 	target = ''.join(target.splitlines())
 	print(target)
 	df_temp = spark.sparkContext.parallelize(data).toDF(columns)
+	dt_temp.show()
 
 	df_temp.createOrReplaceTempView("df_temp")
 
