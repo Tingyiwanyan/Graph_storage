@@ -43,7 +43,7 @@ def add_triple():
 	#print(target)
 	#target = ''.join(target.splitlines())
 	#print(target)
-	#df_temp = spark.sparkContext.parallelize(data).toDF(columns)
+	df_temp = spark.sparkContext.parallelize(data).toDF(columns)
 	#df_temp.show()
 
 	#spark.sql("INSERT INTO graph_database.triple_relation \
