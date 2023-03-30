@@ -28,7 +28,7 @@ spark.sql("CREATE TABLE IF NOT EXISTS graph_database.triple_relation (ID Varchar
 
 app = Flask(__name__)
 
-k 
+
 #route for adding new triple
 @app.route('/add_triple',methods=['POST'])  
 def add_triple():
