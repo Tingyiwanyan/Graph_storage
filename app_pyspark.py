@@ -28,7 +28,7 @@ spark.sql("CREATE TABLE IF NOT EXISTS graph_database.triple_relation (ID Varchar
 
 app = Flask(__name__)
 
-
+k 
 #route for adding new triple
 @app.route('/add_triple',methods=['POST'])  
 def add_triple():
@@ -41,7 +41,7 @@ def add_triple():
 	columns = ["id","source","relation","time","target"]
 	data = [(id_,source,relation,time,target)]
 	print(target)
-	target = target.strip()
+	target = ''.join(target.splitlines())
 	print(target)
 	df_temp = spark.sparkContext.parallelize(data).toDF(columns)
 
