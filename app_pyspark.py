@@ -53,7 +53,7 @@ def add_triple():
 	#df_temp.write.mode('overwrite').saveAsTable("graph_database.temp_table")
 
 	#spark.sql("INSERT INTO TABLE graph_database.triple_relation SELECT * FROM graph_database.temp_table")
-	tables = spark.catalog.listTables()
+	tables = spark.catalog.listTables("graph_database")
 	if "triple_relation" in [table.name for table in tables]:
 		df_temp.write.mode('append').saveAsTable("graph_database.triple_relation")
 	else:
