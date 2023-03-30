@@ -8,9 +8,9 @@ Initiate spark session
 spark = SparkSession.builder.enableHiveSupport().getOrCreate()
 
 
-#columns = ["source", "relation", "target"]
+#columns = ["id","source","relation","time","target"]
 
-#data = [("james","where","Home")]
+#data = [("11","james","where","march","Home")]
 
 #triple_DF = spark.sparkContext.parallelize(data).toDF(columns)
 
@@ -49,9 +49,9 @@ def add_triple():
 	#df_temp.createOrReplaceTempView("df_temp")
 	df_temp.write.mode('overwrite').saveAsTable("graph_database.temp_table")
 
-	spark.sql("INSERT INTO TABLE graph_database.triple_relation SELECT * FROM graph_database.temp_table")
+	#spark.sql("INSERT INTO TABLE graph_database.triple_relation SELECT * FROM graph_database.temp_table")
 
-	#df_temp.write.mode('append').saveAsTable("graph_database.triple_relation")
+	df_temp.write.mode('append').saveAsTable("graph_database.triple_relation")
 
 	#df.write.insertInto("graph_database.temporal_table",overwrite = False)
 
