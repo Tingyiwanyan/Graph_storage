@@ -39,7 +39,7 @@ def add_triple():
 	id_ = data['id']
 	time_ = data['time']
 	columns = ["id","source","relation","time","target"]
-	data = [(id_,source,relation,time,target)]
+	data = [(id_,source,relation,time_,target)]
 	print(target)
 	target = ''.join(target.splitlines())
 	print(target)
