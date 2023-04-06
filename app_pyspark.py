@@ -19,11 +19,11 @@ def add_triple():
 	data = request.get_json() # get the json from the post request object
 	source = data['source']
 	relation = data['relation']
-	relation_user = data['relationuser']
+	#relation_user = data['relationuser']
 	target = data['target']
-	id_ = data['id']
+	#id_ = data['id']
 	time = data['time']
-	columns = ["id","relationuser","source","relation","time","target"]
+	columns = ["source","relation","time","target"]
 	data = [(id_,relation_user, source,relation,time,target)]
 	#print(target)
 	#target = ''.join(target.splitlines())
